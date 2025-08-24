@@ -6,15 +6,17 @@
 Run a clib command
 trouble with interactive commands}
 \usage{
-clib_run(command, args = character())
+clib_run(command, args = character(), capture = FALSE)
 }
 \arguments{
 \item{command}{Name of the clib command to run}
 
 \item{args}{Arguments to pass to clib}
+
+\item{capture}{Logical; if TRUE, capture and return output, else run interactively (default: FALSE)}
 }
 \value{
-Output of the clib command
+Output of the clib command if capture=TRUE, otherwise NULL
 }
 \description{
 clib run
