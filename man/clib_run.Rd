@@ -3,9 +3,10 @@
 \name{clib_run}
 \alias{clib_run}
 \title{clib run
-Run a clib command}
+Run a clib command
+trouble with interactive commands}
 \usage{
-clib_run(command, args)
+clib_run(command, args = character())
 }
 \arguments{
 \item{command}{Name of the clib command to run}
@@ -18,4 +19,5 @@ Output of the clib command
 \description{
 clib run
 Run a clib command
+trouble with interactive commands
 }
