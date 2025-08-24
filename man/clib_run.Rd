@@ -5,9 +5,11 @@
 \title{clib run
 Run a clib command}
 \usage{
-clib_run(args)
+clib_run(command, args)
 }
 \arguments{
+\item{command}{Name of the clib command to run}
+
 \item{args}{Arguments to pass to clib}
 }
 \value{
