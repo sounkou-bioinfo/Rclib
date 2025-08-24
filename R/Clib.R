@@ -1,7 +1,13 @@
 clib_commands <- c(
-    "clib", "clib-install", "clib-search", "clib-init",
-    "clib-configure", "clib-build", "clib-update",
-    "clib-upgrade", "clib-uninstall"
+    "clib",
+    "clib-install",
+    "clib-search",
+    "clib-init",
+    "clib-configure",
+    "clib-build",
+    "clib-update",
+    "clib-upgrade",
+    "clib-uninstall"
 )
 clib_binaries <- clib_commands
 if (.Platform$OS.type == "windows") {
@@ -42,8 +48,9 @@ clib_run <- function(command, args = character()) {
     on.exit(Sys.setenv(PATH = OldPATH), add = TRUE)
     Sys.setenv(PATH = paste(bin_dir, OldPATH, sep = .Platform$path.sep))
     PATH <- Sys.getenv("PATH")
-    result <- system2(clib_path,
-        args = args, stdout = TRUE, stderr = TRUE,
+    result <- system2(
+        clib_path,
+        args = args,
         env = paste0("PATH=", PATH)
     )
     return(result)
