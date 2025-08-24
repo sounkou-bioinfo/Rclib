@@ -1,6 +1,5 @@
 # Rclib
 
-
 [clib](https://github.com/clibs/clib), the C package manager CLI.
 
 This package bundles the clib command-line tool, allowing its distribution as an R package and likely use in R projects that use the header libraries provided by the clib organization.
