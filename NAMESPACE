@@ -3,3 +3,4 @@
 export(clib_bin_install)
 export(clib_run)
 export(get_clib_binary)
+export(strip_ansi)

@@ -1,17 +1,24 @@
+#' Strip ANSI escape codes from a character vector
+#' @param x Character vector possibly containing ANSI escape codes
+#' @return Character vector with ANSI codes removed
+#' @export
+strip_ansi <- function(x) {
+    gsub("\\x1b\\[[0-9;]*[mK]", "", x, perl = TRUE)
+}
 clib_commands <- c(
-  "clib",
-  "clib-install",
-  "clib-search",
-  "clib-init",
-  "clib-configure",
-  "clib-build",
-  "clib-update",
-  "clib-upgrade",
-  "clib-uninstall"
+    "clib",
+    "clib-install",
+    "clib-search",
+    "clib-init",
+    "clib-configure",
+    "clib-build",
+    "clib-update",
+    "clib-upgrade",
+    "clib-uninstall"
 )
 clib_binaries <- clib_commands
 if (.Platform$OS.type == "windows") {
-  clib_binaries <- paste0(clib_binaries, ".exe")
+    clib_binaries <- paste0(clib_binaries, ".exe")
 }
 
 # get binary from installed package bin directory
@@ -19,17 +26,17 @@ if (.Platform$OS.type == "windows") {
 #' @return Path to the binary
 #' @export
 get_clib_binary <- function(binary) {
-  if (!(binary %in% clib_binaries)) {
-    stop(paste("Binary", binary, "is not a valid clib binary"))
-  }
-  src <- system.file("bin", binary, package = "Rclib", mustWork = TRUE)
-  if (src == "") {
-    stop(paste("Binary", binary, "not found in package bin directory"))
-  }
-  if (!file.exists(src)) {
-    stop(paste("Binary", binary, "not found at path:", src))
-  }
-  return(src)
+    if (!(binary %in% clib_binaries)) {
+        stop(paste("Binary", binary, "is not a valid clib binary"))
+    }
+    src <- system.file("bin", binary, package = "Rclib", mustWork = TRUE)
+    if (src == "") {
+        stop(paste("Binary", binary, "not found in package bin directory"))
+    }
+    if (!file.exists(src)) {
+        stop(paste("Binary", binary, "not found at path:", src))
+    }
+    return(src)
 }
 
 #' clib run
@@ -41,31 +48,31 @@ get_clib_binary <- function(binary) {
 #' @return Output of the clib command if capture=TRUE, otherwise NULL
 #' @export
 clib_run <- function(command, args = character(), capture = FALSE) {
-  stopifnot(command %in% clib_commands)
-  clib_path <- get_clib_binary(command)
-  bin_dir <- dirname(clib_path)
-  # add it to PATH
-  OldPATH <- Sys.getenv("PATH")
-  on.exit(Sys.setenv(PATH = OldPATH), add = TRUE)
-  Sys.setenv(PATH = paste(bin_dir, OldPATH, sep = .Platform$path.sep))
-  PATH <- Sys.getenv("PATH")
-  if (capture) {
-    out <- system2(
-      clib_path,
-      args = args,
-      env = paste0("PATH=", PATH),
-      stdout = TRUE,
-      stderr = TRUE
-    )
-    return(out)
-  } else {
-    system2(
-      clib_path,
-      args = args,
-      env = paste0("PATH=", PATH)
-    )
-    invisible(NULL)
-  }
+    stopifnot(command %in% clib_commands)
+    clib_path <- get_clib_binary(command)
+    bin_dir <- dirname(clib_path)
+    # add it to PATH
+    OldPATH <- Sys.getenv("PATH")
+    on.exit(Sys.setenv(PATH = OldPATH), add = TRUE)
+    Sys.setenv(PATH = paste(bin_dir, OldPATH, sep = .Platform$path.sep))
+    PATH <- Sys.getenv("PATH")
+    if (capture) {
+        out <- system2(
+            clib_path,
+            args = args,
+            env = paste0("PATH=", PATH),
+            stdout = TRUE,
+            stderr = TRUE
+        )
+        return(out)
+    } else {
+        system2(
+            clib_path,
+            args = args,
+            env = paste0("PATH=", PATH)
+        )
+        invisible(NULL)
+    }
 }
 
 #' clib_bin_install
@@ -75,14 +82,14 @@ clib_run <- function(command, args = character(), capture = FALSE) {
 #' @return NULL
 #' @export
 clib_bin_install <- function(dest_dir) {
-  if (!dir.exists(dest_dir)) {
-    dir.create(dest_dir, recursive = TRUE, showWarnings = FALSE)
-  }
-  lapply(X = clib_binaries, FUN = function(binary) {
-    src <- get_clib_binary(binary)
-    dest <- file.path(dest_dir, binary)
-    file.copy(src, dest, overwrite = TRUE)
-    Sys.chmod(dest, mode = "0755") # Ensure the binary is executable
-  })
-  invisible(NULL)
+    if (!dir.exists(dest_dir)) {
+        dir.create(dest_dir, recursive = TRUE, showWarnings = FALSE)
+    }
+    lapply(X = clib_binaries, FUN = function(binary) {
+        src <- get_clib_binary(binary)
+        dest <- file.path(dest_dir, binary)
+        file.copy(src, dest, overwrite = TRUE)
+        Sys.chmod(dest, mode = "0755") # Ensure the binary is executable
+    })
+    invisible(NULL)
 }

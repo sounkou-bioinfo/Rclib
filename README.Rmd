@@ -22,5 +22,5 @@ This package bundles the clib command-line tool, allowing its distribution as an
 
 ## Example usage
 ```{r, eval = TRUE, echo = TRUE}
-Rclib::clib_run("clib", c("search", "khash"), capture = TRUE)
+Rclib::clib_run("clib", c("search", "khash"), capture = TRUE) |> Rclib::strip_ansi()
 ```
