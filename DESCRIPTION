@@ -2,7 +2,7 @@ Package: Rclib
 Title: Clib `C` Package Manager CLI For R Package Usage
 Version: 0.0.1.9000
 Authors@R: 
-    person(name = "Sounko Mahaname Toure", email = "Sounkoutoure@gmail.com", role = c("aut", "cre"))
+    person(given = "Sounkou Mahaname", family = "Toure", email = "Sounkoutoure@gmail.com", role = c("aut", "cre"))
 Description: Clib `C` Package Manager CLI For R Package Usage
 License: MIT
 Encoding: UTF-8
